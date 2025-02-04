@@ -1,0 +1,1 @@
+python tracking/train.py --script artrackv2 --config artrackv2_256_got_itpn --save_dir ./output_02_04 --mode multiple --nproc_per_node 4 --use_wandb 0
