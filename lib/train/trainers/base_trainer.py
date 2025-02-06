@@ -192,7 +192,7 @@ class BaseTrainer:
 
         # Load network
         print(checkpoint_path)
-        checkpoint_dict = torch.load(checkpoint_path, map_location='cpu')
+        checkpoint_dict = torch.load(checkpoint_path, map_location='cpu',weights_only=False)
         print(checkpoint_dict['net_type'])
 
         assert net_type == checkpoint_dict['net_type'], 'Network is not of correct type.'

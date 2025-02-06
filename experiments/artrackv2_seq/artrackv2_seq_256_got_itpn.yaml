@@ -38,7 +38,7 @@ MODEL:
   EXTENSION: 3
   PRENUM: 7
   PRETRAIN_FILE: "ARTrackV2_ep0120.pth.tar"
-  PRETRAIN_PTH: "./output/checkpoints/train/artrackv2/artrackv2_256_got_itpn/ARTrackV2_ep0120.pth.tar"
+  PRETRAIN_PTH: "/chenyuming/project/hjd/ARTrack/output_02_04/checkpoints/train/artrackv2/artrackv2_256_got_itpn/ARTrackV2_ep0120.pth.tar"
   EXTRA_MERGER: False
   RETURN_INTER: False
   DECODER:

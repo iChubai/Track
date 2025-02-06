@@ -83,7 +83,7 @@ class ARTrackV2Seq(nn.Module):
 
         loss = torch.tensor(0.0, dtype=torch.float32).to(search.device)
         if target_in_search_img != None:
-            target_in_search_gt = self.backbone.patch_embed_origin(target_in_search_img)
+            target_in_search_gt = self.backbone.patch_embed_true(target_in_search_img)
             z_1_feat = z_1_feat.reshape(z_1_feat.shape[0], int(z_1_feat.shape[1] ** 0.5), int(z_1_feat.shape[1] ** 0.5),
                                         z_1_feat.shape[2]).permute(0, 3, 1, 2)
             target_in_search_gt = self.cross_2_decoder.unpatchify(target_in_search_gt)
@@ -197,7 +197,12 @@ def build_artrackv2_seq(cfg, training=True):
         score_mlp,
     )
     load_from = cfg.MODEL.PRETRAIN_PTH
-    checkpoint = torch.load(load_from, map_location="cpu")
+    checkpoint = torch.load(load_from, map_location="cpu",weights_only=False)
+    checkpoint_copy = checkpoint.copy()
+    keys_to_delete = ['backbone.patch_embed_true.proj.weight', 'backbone.patch_embed_true.proj.bias']
+    for key in keys_to_delete:
+        if key in checkpoint_copy['net']:
+            del checkpoint_copy['net'][key]
     missing_keys, unexpected_keys = model.load_state_dict(checkpoint["net"], strict=False)
     print('Load pretrained model from: ' + load_from)
     if 'sequence' in cfg.MODEL.PRETRAIN_FILE and training:

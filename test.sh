@@ -1,0 +1,1 @@
+python tracking/test.py artrack_seq artrackv2_256_got_itpn --dataset got10k_test --threads 16 --num_gpus 4

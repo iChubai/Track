@@ -774,8 +774,9 @@ class Fast_iTPN(nn.Module):
             10, embed_dim)
         nn.init.kaiming_normal_(self.word_embeddings.weight.data)
         trunc_normal_(self.position_embeddings.weight.data,std=.02)
+        #embed_dim must be 768
         self.patch_embed_true = PatchEmbed_true(img_size=self.search_size, patch_size=patch_size, in_chans=3,
-                                          embed_dim=self.embed_dim)
+                                          embed_dim=768)
         self.output_bias = torch.nn.Parameter(torch.zeros(self.bins * self.range + 12))
         self.build_blocks(
             depths=[depth_stage1, depth_stage2, depth],

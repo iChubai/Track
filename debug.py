@@ -29,19 +29,28 @@
 # print_checkpoint_info(checkpoint_path)
 import torch
 
-pretrain_path = '/mnt/sda/hjd/ARTrack/lib/train/pretrained_models/fast_itpn_tiny_1600e_1k.pt'
+pretrain_path = '/chenyuming/project/hjd/ARTrack/output_02_04/checkpoints/train/artrackv2/artrackv2_256_got_itpn/ARTrackV2_ep0120.pth.tar'
 
 # 加载预训练模型权重
-checkpoint = torch.load(pretrain_path, map_location='cpu')
+checkpoint = torch.load(pretrain_path, map_location='cpu', weights_only=False)
+checkpoint_copy = checkpoint.copy()
 
 # 打印所有键名
 print("Keys in the pretrained model checkpoint:")
-for key in checkpoint.keys():
+for key in checkpoint['net'].keys():
     print(key)
 
-# 检查特定键是否存在
-key_to_check = 'net/backbone.patch_embed_true.proj.weight'
-if key_to_check in checkpoint:
-    print(f"Key {key_to_check} exists in the checkpoint.")
-else:
-    print(f"Key {key_to_check} does not exist in the checkpoint.")
+# 要删除的键
+keys_to_delete = ['backbone.patch_embed_true.proj.weight', 'backbone.patch_embed_true.proj.bias']
+
+# 删除指定的键
+for key in keys_to_delete:
+    if key in checkpoint_copy['net']:
+        del checkpoint_copy['net'][key]
+
+# 检查键是否存在
+for key in keys_to_delete:
+    if key in checkpoint_copy['net']:
+        print(f"Key {key} exists in the checkpoint copy.")
+    else:
+        print(f"Key {key} does not exist in the checkpoint copy.")

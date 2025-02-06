@@ -1568,7 +1568,7 @@ def fastitpnt(pretrained=False, pos_type="interpolate", pretrain_type="",bins = 
         **kwargs)
     model.default_cfg = _cfg()
     #TODO :fix the pretrain_path
-    pretrain_path = "/home/ubuntu/fishworld/project/hjd/hjd/ARTrack/pretrained_models/fast_itpn_tiny_1600e_1k.pt"
+    pretrain_path = "/chenyuming/project/hjd/ARTrack/pretrained_models/fast_itpn_tiny_1600e_1k.pt"
     if pretrained:
         checkpoint = torch.load(pretrain_path, map_location="cpu")
         load_pretrained(model,checkpoint,pos_type)
